@@ -25,10 +25,10 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
       location: null,
     };
   }
-  
+
   public onClickFindNear = async () => {
     const location = await this.fetchLocation();
-    
+
     this.setState({
       location,
     }, () => {
@@ -47,7 +47,7 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
   public onClick = () => {
     this.fetchPoi(this.state.location);
   }
-  
+
   public async fetchPoi(location?) {
     const response = await fetch(`/api/fetch${location ? `?lat=${location[0]}&lon=${location[1]}`: ""}`);
     const poi = await response.json();
@@ -56,7 +56,7 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
       poi,
     });
   }
-  
+
   render() {
     const {
       poi,
@@ -70,7 +70,7 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
         >
           Lonely Planet's eats finder
         </Heading>
-        
+
         <Heading
           level={4}
           override={{ fontSize: "22px" }}
@@ -80,7 +80,7 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
         <TextBodySmall>
           <div dangerouslySetInnerHTML={{ __html: poi.attributes.review.essential }} />
         </TextBodySmall>
-        
+
         {poi.attributes.website && <div style={{ marginTop: "16px", marginBottom: "16px" }}>
           <a href={`tel:${poi.attributes.website}`}>
             {poi.attributes.website}

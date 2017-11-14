@@ -23,7 +23,7 @@ export interface IPoi {
 
 export interface IPoiResponse {
   data: IPoi[];
-  links: { [key: string]: string };  
+  links: { [key: string]: string };
 }
 
 export interface IPoiService {
@@ -33,8 +33,8 @@ export interface IPoiService {
 
 @injectable()
 export default class PoiService implements IPoiService {
-  public baseUrl: string = "http://stable.web.op-api-gateway.qa.lonelyplanet.com";
-  
+  public baseUrl: string = process.env.API_HOST;
+
   public async fetch() {
     const url = `${this.baseUrl}/pois?filter[poi][place_id][has_ancestor]=362228&page[limit]=100&filter[poi][poi_type][equals]=eating`;
 

@@ -1,0 +1,48 @@
+{
+  "name": "express-yourself-demo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "travel-agent build",
+    "build:production": "travel-agent build -p",
+    "dev": "travel-agent dev",
+    "lint": "tslint -p tsconfig.json -c tslint.json './app/**/*.ts'",
+    "precommit": "npm run lint && npm run test",
+    "start:production": "travel-agent start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@lonelyplanet/travel-agent": "^1.1.5",
+    "backpack-ui": "^4.51.1",
+    "isomorphic-fetch": "^2.2.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "reflect-metadata": "^0.1.10",
+    "typescript": "^2.5.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.0.39",
+    "@types/jest": "^21.1.5",
+    "@types/react": "^16.0.22",
+    "@types/webpack-env": "^1.13.2",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "tslint": "^5.8.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "./testSetup.js"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
+    },
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx)"
+    ]
+  }
+}

@@ -1,9 +1,11 @@
 import * as React from "react";
 import Home from "./components/index";
-import Button from "backpack-ui/dist/components/button";
-import Heading from "backpack-ui/dist/components/heading";
+import {
+  Button,
+  Heading,
+  CalloutLink,
+} from "backpack-ui";
 import TextBodySmall from "backpack-ui/dist/components/text/textBodyArticle";
-import CalloutLink from "backpack-ui/dist/components/calloutLink";
 import { IPoi } from "../../services/poiService";
 import * as fetch from "isomorphic-fetch";
 
@@ -73,7 +75,7 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
 
         <Heading
           level={4}
-          override={{ fontSize: "22px" }}
+          override={{ fontSize: "24px" }}
         >
           {poi.attributes.name}
         </Heading>

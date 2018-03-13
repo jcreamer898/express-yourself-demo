@@ -28,21 +28,21 @@ export default class HomeController extends Controller {
   }
 
   @get("/")
-  async show() {
+  public async show() {
     const response = await this.poi.fetch();
     const pois = response.data;
-    
+
     shuffle(pois);
 
     const [poi] = pois;
     this.response.render("home", { poi, });
   }
-  
+
   @get("/api/fetch")
-  async json() {
+  public async json() {
     const req = this.request;
 
-    let response; 
+    let response;
     if (req.query.lat && req.query.lon) {
       response = await this.poi.fetchByLatLon([req.query.lat, req.query.lon]);
     } else {
@@ -50,7 +50,7 @@ export default class HomeController extends Controller {
     }
 
     const pois = response.data;
-    
+
     shuffle(pois);
 
     const [poi] = pois;

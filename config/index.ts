@@ -1,15 +1,21 @@
-export default {
-  middleware: [(req, res, next) => {
-      if (req.originalUrl.indexOf(".json") > -1) {
-        req.headers["content-type"] = "application/json";
-      }
+import * as e from "express";
+import * as webpack from "webpack";
 
-      next();
-    }
-  ],
-  webpack: {
-    entry: {
-      app: "./app/shared/client"
-    }
+const config: webpack.Configuration = {
+  entry: {
+    app: "./app/shared/client"
+  },
+};
+
+const middleware: e.Handler[] = [(req, res, next) => {
+  if (req.originalUrl.indexOf(".json") > -1) {
+    req.headers["content-type"] = "application/json";
   }
+
+  next();
+}];
+
+export default {
+  middleware,
+  webpack: config,
 }

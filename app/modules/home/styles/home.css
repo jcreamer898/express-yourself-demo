@@ -1,0 +1,14 @@
+.app {
+  display: grid;
+  grid-gap: 8px;
+  padding: 8px;
+}
+
+.info {
+  grid-column: span 1;
+}
+
+.logo {
+  max-width: 180px;
+  align-content: center;
+}

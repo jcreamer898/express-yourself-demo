@@ -2,8 +2,11 @@ import * as React from "react";
 import Home from "./components/index";
 import { Button, Heading, CalloutLink } from "backpack-ui";
 import TextBodySmall from "backpack-ui/dist/components/text/textBodyArticle";
+import StaticMap from "backpack-ui/dist/components/staticMap";
 import { IPoi } from "../../services/poiService";
 import * as fetch from "isomorphic-fetch";
+import * as styles from "./styles/home.css";
+import { LPLogo } from "./components/logo";
 
 export interface ILunchTimeProps {
   poi: IPoi;
@@ -64,7 +67,7 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
     const { poi } = this.state;
 
     return (
-      <div style={{ width: "50%", margin: "10% auto" }}>
+      <div className={styles.app}>
         <Heading
           level={1}
           override={{ fontSize: "32px", marginBottom: "16px" }}
@@ -75,16 +78,15 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
         <Heading level={4} override={{ fontSize: "24px" }}>
           {poi.attributes.name}
         </Heading>
-        <TextBodySmall>
+        <div>
           <div
             dangerouslySetInnerHTML={{
               __html: poi.attributes.review.essential
             }}
           />
-        </TextBodySmall>
-
+        </div>
         {poi.attributes.website && (
-          <div style={{ marginTop: "16px", marginBottom: "16px" }}>
+          <div className={styles.info}>
             <a href={`tel:${poi.attributes.website}`}>
               {poi.attributes.website}
             </a>
@@ -92,10 +94,21 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
         )}
 
         {poi.attributes.telephone && (
-          <div style={{ marginTop: "16px", marginBottom: "16px" }}>
+          <div className={styles.info}>
             <CalloutLink href={`tel:${poi.attributes.telephone.national}`}>
               {poi.attributes.telephone.national}
             </CalloutLink>
+          </div>
+        )}
+
+        {poi.attributes.location && (
+          <div className={styles.info}>
+            <img
+              src={"http://api.tiles.mapbox.com/v4/lonelyplanet.b963d424/" +
+              "url-https%3A%2F%2Fassets.staticlp.com%2Fassets%2FmapPin-primary-small.png" +
+              `(${poi.attributes.location.coordinates.join(",")}})/${poi.attributes.location.coordinates.join(",")},15` +
+              "/640x480.png?access_token=pk.eyJ1IjoibG9uZWx5cGxhbmV0IiwiYSI6Imh1ODUtdUEifQ.OLLon0V6rcoTyayXzzUzsg"}
+            />
           </div>
         )}
 

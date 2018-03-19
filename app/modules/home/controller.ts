@@ -35,7 +35,7 @@ export default class HomeController extends Controller {
     shuffle(pois);
 
     const [poi] = pois;
-    this.response.render("home", { poi, });
+    this.response.render("home", { poi, userAgent: this.request.headers["user-agent"] });
   }
 
   @get("/api/fetch")

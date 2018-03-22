@@ -1,8 +1,13 @@
 import { injectable, inject } from "@lonelyplanet/travel-agent";
 import IPoi from "@lonelyplanet/open-planet-node/dist/resources/poi";
 import { IOpenPlanetNode } from "@lonelyplanet/open-planet-node/dist/interfaces";
+import * as fs from "fs";
+import * as path from "path";
 import * as fetch from "isomorphic-fetch";
 import * as TYPES from "../types";
+
+const poisJson = fs.readFileSync(path.join(process.cwd(), "pois.json")).toString();
+const cached: IPoi[] = JSON.parse(poisJson);
 
 export interface IPoiResponse {
   data: IPoi[];
@@ -24,6 +29,11 @@ export default class PoiService implements IPoiService {
   }
 
   public async fetch() {
+    // Uncomment in case internet asplodes... ಠ_ಠ
+    // if (cached) {
+    //   return cached;
+    // }
+
     const newOrleansPlaceId = 362207;
 
     const pois: IPoi[] = await this.client.poi.find({

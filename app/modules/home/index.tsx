@@ -76,7 +76,7 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
             Lonely Planet's eats finder
           </Heading>
 
-          <Heading level={4} override={{ fontSize: "24px" }}>
+          <Heading level={5} override={{ fontSize: "24px" }}>
             <a
               href={`https://www.lonelyplanet.com/a/poi/${poi.id}/${
                 poi.containingPlaceId
@@ -95,7 +95,7 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
           <div>
             <div
               dangerouslySetInnerHTML={{
-                __html: poi.review.essential,
+                __html: poi.review.essential
               }}
             />
           </div>

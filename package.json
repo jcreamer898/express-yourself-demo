@@ -5,13 +5,14 @@
   "scripts": {
     "build": "travel-agent build",
     "build:production": "travel-agent build -p",
-    "dev": "travel-agent dev",
+    "dev": "ENV_PATH=.env.local travel-agent dev",
     "lint": "tslint -p tsconfig.json -c tslint.json './app/**/*.ts'",
     "precommit": "npm run lint && npm run test",
     "start:production": "travel-agent start",
     "test": "jest"
   },
   "dependencies": {
+    "@lonelyplanet/open-planet-node": "^2.12.0",
     "@lonelyplanet/travel-agent": "^1.10.2",
     "backpack-ui": "^4.68.0",
     "isomorphic-fetch": "^2.2.1",

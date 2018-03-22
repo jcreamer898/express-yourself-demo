@@ -3,7 +3,7 @@ import Home from "./components/index";
 import { Button, Heading, CalloutLink } from "backpack-ui";
 import TextBodySmall from "backpack-ui/dist/components/text/textBodyArticle";
 import StaticMap from "backpack-ui/dist/components/staticMap";
-import { IPoi } from "../../services/poiService";
+import IPoi from "@lonelyplanet/open-planet-node/dist/resources/poi";
 import * as fetch from "isomorphic-fetch";
 import * as styles from "./styles/home.css";
 import { LPLogo } from "./components/logo";
@@ -68,56 +68,73 @@ class LunchTime extends React.Component<ILunchTimeProps, ILunchTimeState> {
 
     return (
       <div className={styles.app}>
-        <Heading
-          level={1}
-          override={{ fontSize: "32px", marginBottom: "16px" }}
-        >
-          Lonely Planet's eats finder
-        </Heading>
+        <div className={styles.content}>
+          <Heading
+            level={1}
+            override={{ fontSize: "32px", marginBottom: "16px" }}
+          >
+            Lonely Planet's eats finder
+          </Heading>
 
-        <Heading level={4} override={{ fontSize: "24px" }}>
-          {poi.attributes.name}
-        </Heading>
-        <div>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: poi.attributes.review.essential
-            }}
-          />
-        </div>
-        {poi.attributes.website && (
-          <div className={styles.info}>
-            <a href={`tel:${poi.attributes.website}`}>
-              {poi.attributes.website}
+          <Heading level={4} override={{ fontSize: "24px" }}>
+            <a
+              href={`https://www.lonelyplanet.com/a/poi/${poi.id}/${
+                poi.containingPlaceId
+              }`}
+            >
+              {poi.name}
             </a>
-          </div>
-        )}
+          </Heading>
 
-        {poi.attributes.telephone && (
-          <div className={styles.info}>
-            <CalloutLink href={`tel:${poi.attributes.telephone.national}`}>
-              {poi.attributes.telephone.national}
-            </CalloutLink>
-          </div>
-        )}
+          {poi.images.length > 0 && (
+            <div>
+              <img src={poi.images[0].path} />
+            </div>
+          )}
 
-        {poi.attributes.location && (
-          <div className={styles.info}>
-            <img
-              src={"http://api.tiles.mapbox.com/v4/lonelyplanet.b963d424/" +
-              "url-https%3A%2F%2Fassets.staticlp.com%2Fassets%2FmapPin-primary-small.png" +
-              `(${poi.attributes.location.coordinates.join(",")}})/${poi.attributes.location.coordinates.join(",")},15` +
-              "/640x480.png?access_token=pk.eyJ1IjoibG9uZWx5cGxhbmV0IiwiYSI6Imh1ODUtdUEifQ.OLLon0V6rcoTyayXzzUzsg"}
+          <div>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: poi.review.essential,
+              }}
             />
           </div>
-        )}
+          {poi.website && (
+            <div className={styles.info}>
+              <a href={`tel:${poi.website}`}>{poi.website}</a>
+            </div>
+          )}
 
-        <div>
-          <Button onClick={this.onClick}>Shuffle</Button>
-        </div>
+          {poi.telephone && (
+            <div className={styles.info}>
+              <CalloutLink href={`tel:${poi.telephone.national}`}>
+                {poi.telephone.national}
+              </CalloutLink>
+            </div>
+          )}
 
-        <div style={{ marginTop: "16px" }}>
-          <Button onClick={this.onClickFindNear}>Find near me</Button>
+          {poi.location && (
+            <div className={styles.info}>
+              <img
+                src={
+                  "http://api.tiles.mapbox.com/v4/lonelyplanet.b963d424/" +
+                  "url-https%3A%2F%2Fassets.staticlp.com%2Fassets%2FmapPin-primary-small.png" +
+                  `(${poi.location.coordinates.join(
+                    ","
+                  )}})/${poi.location.coordinates.join(",")},15` +
+                  "/640x480.png?access_token=pk.eyJ1IjoibG9uZWx5cGxhbmV0IiwiYSI6Imh1ODUtdUEifQ.OLLon0V6rcoTyayXzzUzsg"
+                }
+              />
+            </div>
+          )}
+
+          <div>
+            <Button onClick={this.onClick}>Shuffle</Button>
+          </div>
+
+          <div style={{ marginTop: "16px" }}>
+            <Button onClick={this.onClickFindNear}>Find near me</Button>
+          </div>
         </div>
       </div>
     );

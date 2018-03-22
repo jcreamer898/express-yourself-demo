@@ -1,7 +1,12 @@
 .app {
   display: grid;
-  grid-gap: 8px;
+  grid-gap: 16px;
+  grid-template-columns: repeat(12, [col-start] 1fr);
   padding: 8px;
+}
+
+.content {
+  grid-column: col-start 5 / span 5
 }
 
 .info {

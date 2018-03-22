@@ -4,9 +4,11 @@ import {
   get,
   post,
 } from "@lonelyplanet/travel-agent";
+import IPoi from "@lonelyplanet/open-planet-node/dist/resources/poi";
 import {
   IPoiService,
 } from "../../services/poiService";
+import * as TYPES from "../../types";
 
 function shuffle(arr) {
   var j, x, i;
@@ -21,7 +23,7 @@ function shuffle(arr) {
 export default class HomeController extends Controller {
   public poi: IPoiService;
 
-  constructor(@inject("PoiService") poi?: IPoiService) {
+  constructor(@inject(TYPES.PoiService) poi?: IPoiService) {
     super();
 
     this.poi = poi;
@@ -29,12 +31,12 @@ export default class HomeController extends Controller {
 
   @get("/")
   public async show() {
-    const response = await this.poi.fetch();
-    const pois = response.data;
+    const pois = await this.poi.fetch();
 
     shuffle(pois);
 
     const [poi] = pois;
+
     this.response.render("home", { poi, userAgent: this.request.headers["user-agent"] });
   }
 
@@ -42,14 +44,12 @@ export default class HomeController extends Controller {
   public async json() {
     const req = this.request;
 
-    let response;
+    let pois: IPoi[];
     if (req.query.lat && req.query.lon) {
-      response = await this.poi.fetchByLatLon([req.query.lat, req.query.lon]);
+      pois = await this.poi.fetchByLatLon([req.query.lat, req.query.lon]);
     } else {
-      response = await this.poi.fetch();
+      pois = await this.poi.fetch();
     }
-
-    const pois = response.data;
 
     shuffle(pois);
 
